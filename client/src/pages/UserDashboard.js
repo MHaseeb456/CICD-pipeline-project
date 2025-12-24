@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useRef } from 'react';
+import { useEffect, useState, useCallback } from "react";
 import axios from '../axios';
 import UserForm from '../components/UserForm';
 import { AuthContext } from '../context/AuthContext';
@@ -20,15 +20,16 @@ function UserDashboard() {
     }
   }, [user, navigate]);
 
-  const fetchUsers = () => {
-    axios
-      .get('/api/users')
-      .then(res => setUsers(res.data))
-      .catch(err => {
-        console.error('Fetch Error:', err);
-        if (err.response?.status === 401) logout();
-      });
-  };
+  const fetchUsers = useCallback(() => {
+  axios
+    .get("/api/users")
+    .then((res) => setUsers(res.data))
+    .catch((err) => {
+      console.error("Fetch Error:", err);
+      if (err.response?.status === 401) logout();
+    });
+  }, [logout]);
+
 
   const handleCreate = (userData) => {
     axios
