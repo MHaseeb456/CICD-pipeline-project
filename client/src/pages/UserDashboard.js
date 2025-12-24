@@ -35,3 +35,19 @@ function UserDashboard() {
       fetchUsers();
     }
   }, [user, navigate, fetchUsers]);
+
+  // ✅ Add return statement with JSX
+  return (
+    <div>
+      <h1>User Dashboard</h1>
+      <UserForm ref={formRef} editingUser={editingUser} />
+      <ul>
+        {users.map((u) => (
+          <li key={u.id}>{u.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default UserDashboard;
